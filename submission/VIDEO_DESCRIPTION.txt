@@ -1,0 +1,12 @@
+Aftertext — portable community teletext | Kiroween 2026 demo
+
+Aftertext brings back teletext as a community bulletin. Give each notice a page number, edit it with a live preview, export the bulletin as a small file and read a saved copy offline.
+
+This silent, captioned walkthrough shows actual browser interactions: numeric navigation, reading view, editing a notice across subpages, saving, exporting, importing and reloading with the network disconnected. The ordinary HTTP cache is cleared for the offline demonstration. The community notices are fictional.
+
+Try the app: https://hyunsikparker.github.io/aftertext/
+Source and Kiro records: https://github.com/HyunsikParker/aftertext
+
+Built for the Resurrection category of Kiroween 2026. Kiro CLI generated the initial specification and input validator. Codex reviewed and corrected those outputs, then implemented the compiler, reader, editor and tests. The README describes those contributions and the validation limits.
+
+The app has no accounts, analytics or runtime AI calls. First-load internet access is needed to cache the application. Saved bulletins are local copies; they do not update automatically.

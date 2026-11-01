@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173fcf">
+  <meta name="description" content="A small, portable community bulletin. Make text pages, take them with you, and read them offline.">
+  <title>Aftertext — community bulletin</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#reader-content">Skip to bulletin</a>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="wordmark" href="#page-100" aria-label="Aftertext index">AFTERTEXT<span class="wordmark-mark" aria-hidden="true">▟</span></a>
+      <p>Community text service</p>
+      <span class="edition">Read it. Keep it. Pass it on.</span>
+    </div>
+  </header>
+  <main class="app">
+    <div class="toolbar">
+      <div class="mode-switch" role="group" aria-label="Workspace">
+        <button type="button" id="reader-mode" class="selected" aria-pressed="true">Read bulletin</button>
+        <button type="button" id="editor-mode" aria-pressed="false">Edit bulletin</button>
+      </div>
+      <div class="file-actions">
+        <button type="button" id="import">Open file</button>
+        <button type="button" id="export">Export file <span aria-hidden="true">↗</span></button>
+        <input id="file" type="file" accept="application/json,.json" hidden>
+      </div>
+    </div>
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+    <section id="reader" class="workspace" aria-label="Bulletin reader">
+      <div class="reader-main">
+        <div class="reading-toolbar">
+          <div class="page-heading"><span id="page-label">Page 100</span><span id="subpage-label"></span></div>
+          <div class="display-switch" role="group" aria-label="Reading format">
+            <button type="button" id="grid-mode" aria-pressed="true">Teletext</button>
+            <button type="button" id="text-mode" aria-pressed="false">Reading view</button>
+          </div>
+        </div>
+        <div id="reader-content" class="screen" tabindex="-1">
+          <div class="screen-header"><span id="channel-name"></span><span id="screen-page" aria-hidden="true">100</span></div>
+          <div id="sample-label" class="sample-label" hidden>Example bulletin · Fictional notices</div>
+          <div id="grid" class="teletext" aria-label="Teletext page"></div>
+          <article id="reading-text" class="reading-text" hidden></article>
+          <div class="screen-footer"><span id="issued"></span><span id="age"></span></div>
+        </div>
+        <nav class="page-navigation" aria-label="Pages">
+          <button type="button" id="previous">← Previous</button>
+          <form id="jump-form"><label for="page-input">Page</label><input id="page-input" type="text" inputmode="numeric" autocomplete="off" pattern="[0-9]{3}" maxlength="3" value="100"><button type="submit">Go</button></form>
+          <button type="button" id="next">Next →</button>
+        </nav>
+        <p class="keyboard-note">Type a three-digit page number, or use ← → to turn pages. <kbd>Home</kbd> opens the index.</p>
+      </div>
+      <aside class="sidebar" aria-label="Bulletin controls">
+        <div class="directory-heading"><h1>In this bulletin</h1><span id="article-count"></span></div>
+        <nav id="contents" class="contents" aria-label="Contents"></nav>
+        <details id="keypad-details" class="keypad-details" open>
+          <summary>Page keypad <span id="number-buffer" aria-live="polite"></span></summary>
+          <div id="keypad" class="keypad" role="group" aria-label="Numeric page keypad"></div>
+        </details>
+        <div class="copy-info">
+          <span class="copy-symbol" aria-hidden="true">▤</span>
+          <div><p id="copy-state">Example bulletin</p><p id="payload"></p></div>
+        </div>
+        <p class="explanation">The file holds the whole bulletin. Save a copy to open on another device.</p>
+        <button type="button" id="save-local" class="wide-button">Keep on this device</button>
+        <button type="button" id="load-example" class="text-button">Open example bulletin</button>
+      </aside>
+    </section>
+    <section id="editor" class="editor-workspace" aria-label="Bulletin editor" hidden>
+      <form id="editor-form" novalidate>
+        <div class="editor-heading"><h1>Edit bulletin</h1><span id="dirty">No unsaved changes</span></div>
+        <div class="field"><label for="bulletin-name">Bulletin name</label><input id="bulletin-name" maxlength="100"><small data-error="name" class="field-error"></small></div>
+        <div class="field"><label for="bulletin-date">Issue date and time</label><input id="bulletin-date" type="datetime-local" step="1"><small>This device’s time zone. Readers will see how old the bulletin is.</small><small data-error="issuedAt" class="field-error"></small></div>
+        <div class="article-tools"><h2>Notices</h2><button type="button" id="add-article">+ Add notice</button></div>
+        <nav id="editor-articles" class="editor-articles" aria-label="Select a notice to edit"></nav>
+        <fieldset id="notice-fields"><legend id="notice-legend">Notice</legend>
+          <div class="field-row"><div class="field small-field"><label for="article-page">Page number</label><input id="article-page" type="number" min="101" max="899" step="1"><small data-error="page" class="field-error"></small></div><div class="field"><label for="article-category">Topic</label><input id="article-category"><small data-error="category" class="field-error"></small></div></div>
+          <div class="field"><label for="article-title">Title</label><input id="article-title"><small data-error="title" class="field-error"></small></div>
+          <div class="field"><label for="article-body">Notice text</label><textarea id="article-body" rows="9"></textarea><small id="body-count"></small><small data-error="body" class="field-error"></small></div>
+          <div class="field"><label for="article-source">Source link <span class="optional">(optional)</span></label><input id="article-source" type="url" placeholder="https://"><small data-error="sourceUrl" class="field-error"></small></div>
+          <button type="button" id="delete-article" class="text-button">Remove this notice</button>
+        </fieldset>
+        <div id="editor-errors" class="editor-errors" role="status"></div>
+        <div class="editor-save"><button type="submit" class="primary-button">Save bulletin</button><button type="button" id="discard-draft">Discard changes</button></div>
+      </form>
+      <aside class="preview-column" aria-label="Draft preview">
+        <div class="preview-heading"><h2>Page preview</h2><span id="preview-size"></span></div>
+        <div class="screen preview-screen"><div class="screen-header"><span>Draft</span><span id="preview-page"></span></div><div id="preview-grid" class="teletext"></div></div>
+        <nav class="preview-nav" aria-label="Preview subpages"><button type="button" id="preview-prev">← Previous</button><span id="preview-position"></span><button type="button" id="preview-next">Next →</button></nav>
+        <p class="explanation">Long notices continue on the next subpage. The exported file keeps your original text and spacing.</p>
+      </aside>
+    </section>
+    <footer class="app-footer"><span id="offline-status">Preparing offline access…</span><span>40 columns. A little room for what matters.</span></footer>
+    <noscript><p>Aftertext needs JavaScript to open and edit bulletin files.</p></noscript>
+  </main>
+  <script type="module" src="./src/ui.js"></script>
+</body>
+</html>

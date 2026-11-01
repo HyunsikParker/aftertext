@@ -1,0 +1,65 @@
+{
+  "kind": "Actual browser interactions with captions outside the app iframe; fictional sample notices",
+  "scenes": [
+    {
+      "start": 0.01,
+      "end": 8.07,
+      "caption": "Aftertext brings back teletext as a community bulletin you can edit, carry in a file and read offline."
+    },
+    {
+      "start": 8.64,
+      "end": 16.67,
+      "caption": "Give a notice a page number. Type 201 to open the book swap. All notices in this example are fictional."
+    },
+    {
+      "start": 16.73,
+      "end": 24.77,
+      "caption": "Reading view shows the full notice with ordinary text wrapping. It is also the default on a narrow phone."
+    },
+    {
+      "start": 24.85,
+      "end": 33.89,
+      "caption": "Edit the current bulletin and watch its page preview. Each notice keeps its original words and spacing."
+    },
+    {
+      "start": 34.18,
+      "end": 44.22,
+      "caption": "Long notices continue across subpages. The file preserves Unicode, newlines and spaces independently of the grid."
+    },
+    {
+      "start": 44.25,
+      "end": 51.29,
+      "caption": "Turn the preview page to see the rest. Nothing is silently cut off to fit the screen."
+    },
+    {
+      "start": 51.43,
+      "end": 59.47,
+      "caption": "Save the bulletin on this device. The reader and exported file now use the edited notice."
+    },
+    {
+      "start": 59.53,
+      "end": 67.58,
+      "caption": "Export downloads the whole bulletin as a small JSON file. The byte count is measured from that file."
+    },
+    {
+      "start": 67.63,
+      "end": 75.68,
+      "caption": "Open the exported file to restore the bulletin. The app does not upload it to a server."
+    },
+    {
+      "start": 75.8,
+      "end": 85.84,
+      "caption": "Network disconnected, ordinary browser cache cleared, app reloaded. The saved bulletin still opens."
+    },
+    {
+      "start": 85.96,
+      "end": 95.0,
+      "caption": "At phone width, reading view opens automatically. The same saved file stays available offline."
+    },
+    {
+      "start": 95.0,
+      "end": 105.05,
+      "caption": "Built with Kiro CLI for the specification and initial validator, plus Codex for implementation and tests. Source and Kiro records accompany the demo."
+    }
+  ]
+}
