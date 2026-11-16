@@ -34,7 +34,7 @@ Wrapping Unicode into a fixed-width grid can split a visible character or confus
 
 Twenty-four Node tests cover calendar validation, malformed imports, URL restrictions, file limits, source reconstruction, 150 deterministic mixed-text cases, the status line, the focus rules and a syntax check of every source file. Browser checks cover editing, a real download, import into a fresh browser context, phone layout and offline reload with the ordinary HTTP cache cleared. Review found a missing validator in the service-worker asset list. It was added, and the offline check was strengthened to prevent the ordinary browser cache from masking that error.
 
-The demo is a narrated recording of actual browser interactions, including a disconnected reload. The displayed notices are sample data. Reading view was checked in Chromium from the keyboard alone: the focus target after each move, the status line, the accessibility tree, widths of 320 and 375 pixels, and a reload with the server stopped. No screen reader was run, so speech output is unverified. The application has not yet been tested with a community group.
+The demo is a narrated recording of actual browser interactions, including a disconnected reload; the narration uses a synthetic voice. The displayed notices are sample data. Reading view was checked in Chromium from the keyboard alone: the focus target after each move, the status line, the accessibility tree, widths of 320 and 375 pixels, and a reload with the server stopped. No screen reader was run, so speech output is unverified. The application has not yet been tested with a community group.
 
 ## What comes next
 
