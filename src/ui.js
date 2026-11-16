@@ -1,5 +1,6 @@
 import { LIMITS, compileBulletin, serializeBulletin, deserializeBulletin, validateBulletin } from './core.js';
 import { sample } from './sample.js';
+import { buildAnnouncementMessage, focusReadingHeading, shouldMoveFocus } from './reading.js';
 
 const $ = id => document.getElementById(id);
 const clone = value => JSON.parse(JSON.stringify(value));
@@ -50,12 +51,18 @@ function setBulletin(bulletin, source) {
   renderContents();
   renderReader();
 }
-function go(number, subpage = 0, announce = true) {
+function go(number, subpage = 0, announce = true, initiated = true) {
   const index = state.compiled.pages.findIndex(p => p.pageNumber === number && p.subpageIndex === subpage);
   if (index < 0) { notice(`Page ${number} is not in this bulletin. Choose a page from the contents.`, true); return false; }
   state.page = index;
   renderReader();
-  if (announce) notice(`Page ${number}${state.compiled.pages[index].subpageCount > 1 ? `, subpage ${subpage + 1}` : ''}.`);
+  if (announce) {
+    const fullMessage = buildAnnouncementMessage(state.compiled.pages[state.page], state.compiled.articles, state.format);
+    notice(fullMessage);
+  }
+  if (shouldMoveFocus({ mode: state.mode, format: state.format, initiated })) {
+    focusReadingHeading($('reading-text'));
+  }
   return true;
 }
 function step(direction) {
@@ -72,7 +79,15 @@ function step(direction) {
   state.page = next;
   renderReader();
   const p = state.compiled.pages[next];
-  notice(`Page ${p.pageNumber}, subpage ${p.subpageIndex + 1} of ${p.subpageCount}.`);
+  if (state.format === 'text') {
+    const fullMessage = buildAnnouncementMessage(p, state.compiled.articles, state.format);
+    notice(fullMessage);
+  } else {
+    notice(`Page ${p.pageNumber}, subpage ${p.subpageIndex + 1} of ${p.subpageCount}.`);
+  }
+  if (shouldMoveFocus({ mode: state.mode, format: state.format, initiated: true })) {
+    focusReadingHeading($('reading-text'));
+  }
 }
 function renderGrid(container, page, linkIndex = false) {
   container.replaceChildren();
@@ -248,11 +263,11 @@ function confirmReplace() {
 
 $('reader-mode').addEventListener('click',() => switchMode('reader'));
 $('editor-mode').addEventListener('click',() => switchMode('editor'));
-$('grid-mode').addEventListener('click',() => { state.format = 'grid'; renderReader(); });
-$('text-mode').addEventListener('click',() => { state.format = 'text'; renderReader(); });
+$('grid-mode').addEventListener('click',() => { state.format = 'grid'; try { localStorage.setItem('aftertext:format:v1', 'grid'); } catch { } renderReader(); });
+$('text-mode').addEventListener('click',() => { state.format = 'text'; try { localStorage.setItem('aftertext:format:v1', 'text'); } catch { } renderReader(); if (shouldMoveFocus({ mode: state.mode, format: state.format, initiated: true })) { focusReadingHeading($('reading-text')); } });
 $('previous').addEventListener('click',() => step(-1)); $('next').addEventListener('click',() => step(1));
 $('jump-form').addEventListener('submit',event => { event.preventDefault(); go(Number($('page-input').value)); });
-document.querySelector('.wordmark').addEventListener('click',event => { event.preventDefault(); switchMode('reader'); go(100); });
+document.querySelector('.wordmark').addEventListener('click',event => { event.preventDefault(); switchMode('reader'); go(100, 0, true, false); });
 for (const key of ['1','2','3','4','5','6','7','8','9','clear','0','back']) {
   const button = el('button',key === 'clear' ? 'Clear' : key === 'back' ? '⌫' : key, key.length>1 ? 'utility' : '');
   button.type = 'button'; button.setAttribute('aria-label',key === 'back' ? 'Delete last digit' : key === 'clear' ? 'Clear page digits' : `Digit ${key}`);
@@ -340,6 +355,10 @@ try {
     else notice('The saved file could not be read. The example is open; the saved file has not been replaced.',true);
   }
 } catch { notice('Device storage is unavailable. You can read, edit and export a file for this session.',true); }
+try {
+  const saved = localStorage.getItem('aftertext:format:v1');
+  if (saved === 'grid' || saved === 'text') state.format = saved;
+} catch { }
 setBulletin(state.bulletin,state.source);
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js').then(() => navigator.serviceWorker.ready).then(() => {

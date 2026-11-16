@@ -1,6 +1,6 @@
 const PREFIX = `aftertext:${self.registration.scope}:`;
-const CACHE = `${PREFIX}v2`;
-const ASSETS = ['./', './index.html', './styles.css', './src/ui.js', './src/core.js', './src/validate.js', './src/sample.js'];
+const CACHE = `${PREFIX}v3`;
+const ASSETS = ['./', './index.html', './styles.css', './src/ui.js', './src/core.js', './src/validate.js', './src/sample.js', './src/reading.js'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
