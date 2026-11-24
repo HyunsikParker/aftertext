@@ -1,12 +1,6 @@
 .DS_Store
 node_modules/
 artifacts/
-*.log
 media/raw/
 media/*.webm
 media/scene-*.png
-
-# Kiro hook output (local run records)
-.kiro/test-status.txt
-.kiro/test-output.txt
-.kiro/hook-runs.log

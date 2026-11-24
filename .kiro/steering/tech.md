@@ -7,7 +7,7 @@ These rules apply to every change. `product.md` says what the product is; this f
 - Plain HTML, CSS and native ES modules in the browser. Node 22 is used only to run tests. There is no build step and no bundler.
 - No dependencies. `package.json` has none and must stay that way: no packages, no CDN scripts, no remote fonts, no new binary assets.
 - Test command: `npm test` (it runs `node --test tests/*.test.js`). New tests go in `tests/<name>.test.js` and import only `node:test`, `node:assert/strict` and other `node:` modules.
-- A Kiro hook runs `npm test` after every file write and stores the latest result in `.kiro/test-status.txt`. Read that file after you change code. A change is not finished while its first line starts with `FAIL`. Never weaken or delete a test to get a pass.
+- A Kiro hook runs `npm test` after every file write and stores the latest result in `artifacts/kiro-hook/test-status.txt`. Read that file after you change code. A change is not finished while its first line starts with `FAIL`. Never weaken or delete a test to get a pass.
 - Files: `index.html`, `styles.css`, `sw.js` (app-shell cache), `src/validate.js` (limits, validation, file format), `src/core.js` (40-column compiler), `src/ui.js` (all DOM code), `src/sample.js` (fictional example), `tests/`.
 - Logic that can be tested without a browser belongs in a module that does not touch `document` or `window`, so Node can import it. `src/ui.js` only wires such modules to the page.
 

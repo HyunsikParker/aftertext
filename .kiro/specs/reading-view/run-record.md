@@ -13,7 +13,8 @@ Written by Claude Code from the logs of the run. Times are UTC on 2026-11-16 unl
   test on 2026-11-15 the agent was asked for the test command and the notice limit without reading a file; it wrote
   `npm test` and `32`.
 - Hook: `postToolUse`, matcher `fs_write`, command `sh .kiro/scripts/test-after-write.sh`. The script runs `npm test`,
-  writes the latest result to `.kiro/test-status.txt` (ignored by git) and appends one line to a log.
+  saves the latest result and appends one line to a log. Live output now goes to `artifacts/kiro-hook/` by default.
+  The [original November 16 log](hook-runs.log) is kept here unchanged.
 - Input: `brief.md` in this folder.
 
 ## Sessions
